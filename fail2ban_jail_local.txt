@@ -1,0 +1,10 @@
+[sshd]
+enabled = true
+port = ssh
+filter = sshd
+logpath = /var/log/auth.log
+bantime = 10m
+maxretry = 3 
+findtime = 10m
+
+#Chnage the bantime and max try as u need
