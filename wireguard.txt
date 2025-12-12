@@ -1,0 +1,22 @@
+[Interface]
+Address = YOUR_CUSTOM_IP Eg:-10.8.0.1/24
+DNS = 10.8.0.1 #DNS of pi-hole DNS
+ListenPort = 51820
+PrivateKey = SERVER_PRIVATE_KEY
+MTU = 1340
+
+# IP forwarding and NAT
+# Feel free to change as ur need
+PostUp = sysctl -w net.ipv4.ip_forward=1
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT
+PostUp = iptables -A FORWARD -o wg0 -j ACCEPT
+PostUp = iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT
+PostDown = iptables -D FORWARD -o wg0 -j ACCEPT
+PostDown = iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+
+# Clients
+[Peer]
+PublicKey = CLIENT_PUBLIC_KEY
+AllowedIPs = 10.8.0.2/32 #CLIENT_IP
+
