@@ -1,0 +1,29 @@
+logoutput: syslog
+
+user.privileged: root
+user.notprivileged: nobody
+
+internal: 0.0.0.0 port = 1080
+external: eth0 #Please check your network defualt 
+
+# Auth settings
+socksmethod: username
+clientmethod: none
+
+# Allow all client
+client pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   log: connect disconnect
+}
+
+# Allow forwarding
+socks pass {
+   from: 0.0.0.0/0 to: 0.0.0.0/0
+   protocol: tcp udp
+   command: bind connect udpassociate
+   socksmethod: username
+   log: connect disconnect
+}
+
+
+# There are different type of layer in Dante like, user auth, PAM based auth, IP resisted so config as u wish
